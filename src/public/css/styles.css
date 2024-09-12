@@ -180,6 +180,7 @@ h6 {
   border: 1px solid #0B1215;
   background-color: #0B1215;
   color: #fdfdfd;
+  cursor: pointer;
 }
 
 .ad-banners-content {

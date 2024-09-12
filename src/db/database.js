@@ -1,7 +1,5 @@
 "use strict";
 
-const createRequire = require('module');
-const fs = require('fs');
 const sqlite3 = require('sqlite3');
 
 function createTable(db) {
@@ -13,7 +11,7 @@ function createTable(db) {
 
 function createDBConnection() {
   const db = new sqlite3.Database(
-    "./db/links.db", (err) => {
+    "./src/db/links.db", (err) => {
       if (err) {
         return console.error(err.message);
       }

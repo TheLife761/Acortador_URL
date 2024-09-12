@@ -1,0 +1,22 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Cortito y al Pie
+  link(rel='stylesheet' href='css/styles.css')
+  link(rel='preconnect' href='https://fonts.googleapis.com')
+  link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin='')
+  link(href='https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap' rel='stylesheet')
+  body
+    header.top-navbar
+      a(href='/')
+        img.main-logo(src='assets/logo.png' alt='Logo de Cortito y al Pie')
+      .nav-content
+        nav.top-nav-links
+          a(href='/planes') Planes
+          a(href='#') Contacto
+          a(href='#') Sobre nosotros
+        .signin-links
+          a#login-btn(href='#') Iniciar sesi&oacute;n
+          a#signup-btn(href='#') Registrarse
+    block content

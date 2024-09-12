@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./app.js",
+    "start": "nodemon ./src/app.js",
     "devstart": "SET DEBUG=myapp:* & nodemon ./bin/www"
   },
   "keywords": [],

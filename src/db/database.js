@@ -1,10 +1,15 @@
-var createRequire = require('module');
-var fs = require('node:fs');
-// const require = createRequire(import.meta.url);
+import { createRequire } from 'module';
+import fs from 'node:fs';
+import sqlite3 from 'sqlite3';
 
-const sqlite3 = require("sqlite3").verbose();
+function createTable(db) {
+  db.exec(`CREATE TABLE IF NOT EXISTS links(
+      originalURL TEXT NOT NULL,
+      shortenedURL TEXT NOT NULL UNIQUE
+    );`);
+}
 
-function createDbConnection() {
+function createDBConnection() {
   const db = new sqlite3.Database(
     "./db/links.db", (err) => {
       if (err) {
@@ -16,15 +21,7 @@ function createDbConnection() {
   return db;
 }
 
-function createTable(db) {
-  db.exec(`CREATE TABLE IF NOT EXISTS links(
-      originalURL TEXT NOT NULL,
-      shortenedURL TEXT NOT NULL UNIQUE
-    );`)
-}
-
-module.exports = createDbConnection
-
+export default createDBConnection;
 
 //https://www.sqlitetutorial.net/sqlite-getting-started/
 //https://www.sqlitetutorial.net/sqlite-nodejs/query/

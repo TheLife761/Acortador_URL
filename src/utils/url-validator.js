@@ -1,3 +1,5 @@
+"use strict";
+
 function isValidUrl(str) {
   try {
     const newUrl = new URL(str);

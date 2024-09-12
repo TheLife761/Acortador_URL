@@ -1,3 +1,5 @@
+"use strict";
+
 const createRequire = require('module');
 const fs = require('fs');
 const sqlite3 = require('sqlite3');

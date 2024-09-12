@@ -1,13 +1,13 @@
-import express from 'express';
+const express = require('express');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.sendFile('index.html');
+  res.render('index');
 });
 
 router.get('/planes', (req, res) => {
-  res.sendFile('pricing.html',);
+  res.render('plans');
 });
 
-export default router;
+module.exports = router;

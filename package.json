@@ -1,12 +1,12 @@
 {
   "name": "nodejs",
   "version": "1.0.0",
-  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./src/app.js",
-    "devstart": "SET DEBUG=myapp:* & nodemon ./bin/www"
+    "start": "nodemon ./src/bin/www",
+    "devstart": "SET DEBUG=myapp:* & nodemon ./src/bin/www",
+    "test": "mocha ./src/tests"
   },
   "keywords": [],
   "author": "",
@@ -16,8 +16,17 @@
     "env": "^0.0.2",
     "express": "^5.0.0",
     "mocha": "^10.7.3",
-    "nanoid": "^5.0.7",
+    "nanoid": "^3.3.4",
     "nodemon": "^3.1.4",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.6",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@types/cookie-parser": "^1.4.7",
+    "cookie-parser": "^1.4.6",
+    "morgan": "^1.10.0",
+    "pug": "^3.0.3"
   }
 }

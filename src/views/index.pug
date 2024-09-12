@@ -1,3 +1,4 @@
+extends layout
 block content
   .main-content
     .display-content
@@ -6,10 +7,11 @@ block content
       .shortener-container
         .shortener-input-container
           label.top-shortener-label Peg&aacute; el enlace a acortar
-          .shortener-input-wrap
-            input.shortener-input(type='text' placeholder='Enlace a acortar')
-            button.input-action-btn Acortar
-          label.danger-shortener-label Este enlace no es v&aacute;lido
+          form(action="/api/shortener", method="post") 
+            .shortener-input-wrap
+              input.shortener-input(type='text' placeholder='Enlace a acortar')
+              button.input-action-btn Acortar
+            label.danger-shortener-label Este enlace no es v&aacute;lido
       .short
         .shortener-input-wrap
           input.shortener-input(type='text' value='cyalp.com/enlace' readonly='')

@@ -7,4 +7,4 @@ function isValidUrl(str) {
   }
 }
 
-export default isValidUrl;
+module.exports = isValidUrl;

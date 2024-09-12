@@ -1,7 +1,8 @@
-import express from 'express';
-import isValidUrl from '../utils/url-validator.js';
-import { nanoid } from 'nanoid';
-import createDbConnection from '../db/database.js';
+const express = require('express');
+const nanoid = require('nanoid');
+
+const createDbConnection = require('../db/database.js');
+const isValidUrl = require('../utils/url-validator.js');
 
 const router = express.Router();
 
@@ -48,4 +49,4 @@ router.post('/shortener', async (req, res) => {
     }
 });
 
-export default router;
+module.exports = router;

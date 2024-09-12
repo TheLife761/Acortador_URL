@@ -1,6 +1,6 @@
-import { createRequire } from 'module';
-import fs from 'node:fs';
-import sqlite3 from 'sqlite3';
+const createRequire = require('module');
+const fs = require('fs');
+const sqlite3 = require('sqlite3');
 
 function createTable(db) {
   db.exec(`CREATE TABLE IF NOT EXISTS links(
@@ -21,7 +21,7 @@ function createDBConnection() {
   return db;
 }
 
-export default createDBConnection;
+module.exports = createDBConnection;
 
 //https://www.sqlitetutorial.net/sqlite-getting-started/
 //https://www.sqlitetutorial.net/sqlite-nodejs/query/

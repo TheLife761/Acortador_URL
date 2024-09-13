@@ -3,7 +3,7 @@
 const assert = require('assert');
 const isValidUrl = require('../utils/url-validator');
 
-describe('IsValidURL', function () {
+describe('URL Validation', function () {
     it('should return false when url is invalid', function () {
       assert.equal(isValidUrl("abbabababba"), false);
       assert.equal(isValidUrl("google.com"), false);

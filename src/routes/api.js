@@ -9,9 +9,9 @@ const isValidUrl = require("../utils/url-validator.js");
 const router = express.Router();
 
 router.post("/shortener", async (req, res) => {
-  const { origUrl } = req.body;
+  const { url } = req.body;
 
-  if (!isValidUrl(origUrl)) {
+  if (!isValidUrl(url)) {
     return res.status(400).json({ error: "Not valid url" });
   }
 
@@ -24,7 +24,7 @@ router.post("/shortener", async (req, res) => {
       const sql =
         "SELECT * FROM links WHERE originalURL = ? OR shortenedURL = ?";
 
-      db.get(sql, [origUrl, shortenedURL], (err, row) => {
+      db.get(sql, [ url, shortenedURL ], (err, row) => {
         if (err) {
           db.close();
           return res.status(500).json({ error: "Database error" });
@@ -39,7 +39,7 @@ router.post("/shortener", async (req, res) => {
 
         db.run(
           "INSERT INTO links (originalURL, shortenedURL) VALUES (?, ?)",
-          [origUrl, shortenedURL],
+          [ url, shortenedURL ],
           function (err) {
             if (err) {
               db.close();
@@ -83,10 +83,5 @@ router.get("/:urlId", async (req, res) => {
     res.status(500).json("Server Error");
   }
 });
-
-module.exports = router;
-
-//https://www.freecodecamp.org/news/how-to-validate-urls-in-javascript/
-//https://blog.logrocket.com/how-build-url-shortener-node-js/
 
 module.exports = router;

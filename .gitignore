@@ -128,3 +128,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+#files 
+
+/src/db/links.db
+/src/tests/dbInsert.js
+/src/tests/dbtest.js
+/src/tests/urlValidator.js

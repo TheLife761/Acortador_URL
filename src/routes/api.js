@@ -6,6 +6,8 @@ var { nanoid } = require("nanoid");
 const createDbConnection = require("../db/database.js");
 const isValidUrl = require("../utils/url-validator.js");
 
+const pageUrl = "http://cyalp.com/";
+
 const router = express.Router();
 
 router.post("/shortener", async (req, res) => {
@@ -19,7 +21,6 @@ router.post("/shortener", async (req, res) => {
 
   try {
     const shortenedURL = nanoid(6);
-    const url = [];
     db.serialize(function (err) {
       const sql =
         "SELECT * FROM links WHERE originalURL = ? OR shortenedURL = ?";
@@ -33,7 +34,8 @@ router.post("/shortener", async (req, res) => {
           db.close();
           return res.json({
             message: "URL already exists",
-            shortenedURL: row.shortenedURL,
+            originalUrl: url,
+            shortenedURL: pageUrl + row.shortenedURL,
           });
         }
 

@@ -1,12 +1,9 @@
 "use strict";
 
 const express = require("express");
-var { nanoid } = require("nanoid");
-
 const createDbConnection = require("../db/database.js");
 const isValidUrl = require("../utils/url-validator.js");
-
-const pageUrl = "http://cyalp.com/";
+const { searchOriginalURL, searchShortenedURL } = require("../utils/db-queries.js")
 
 const router = express.Router();
 
@@ -17,73 +14,57 @@ router.post("/shortener", async (req, res) => {
     return res.status(400).json({ error: "Not valid url" });
   }
 
-  const db = createDbConnection();
-
   try {
-    const shortenedURL = nanoid(6);
-    db.serialize(function (err) {
-      const sql =
-        "SELECT * FROM links WHERE originalURL = ? OR shortenedURL = ?";
-
-      db.get(sql, [ url, shortenedURL ], (err, row) => {
-        if (err) {
-          db.close();
-          return res.status(500).json({ error: "Database error" });
-        }
-        if (row) {
-          db.close();
-          return res.json({
-            message: "URL already exists",
-            originalUrl: url,
-            shortenedURL: pageUrl + row.shortenedURL,
-          });
-        }
-
-        db.run(
-          "INSERT INTO links (originalURL, shortenedURL) VALUES (?, ?)",
-          [ url, shortenedURL ],
-          function (err) {
-            if (err) {
-              db.close();
-              return res
-                .status(500)
-                .json({ error: "Database insertion error" });
-            }
-            db.close();
-            return res.json({ message: "URL shortened", shortenedURL });
-          }
-        );
-      });
-    });
+    const db = createDbConnection();
+    searchOriginalURL(db, url, res);
   } catch (e) {
     console.log(e);
   }
 });
 
+// router.get("/:urlId", async (req, res) => {
+//   const shortenedURL = req.params.urlId;
+
+//   try {
+//     const db = createDbConnection();
+    
+//     db.serialize(() => {
+//       var values = searchShortenedURL(db, shortenedURL);
+//       console.log(values);
+//       if(values.originalURL == ""){
+//         return
+//       } else {
+//         res.redirect(values.originalURL);
+//       }
+//     })
+
+//     // res.redirect(
+//     //   shortened.shortenedURL
+//     // );
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json("Server Error");
+//   }
+// });
+
 router.get("/:urlId", async (req, res) => {
+  const shortenedURL = req.params.urlId;
+
   try {
     const db = createDbConnection();
-
-    db.serialize(function (err) {
-      const sql = "SELECT * FROM links WHERE shortenedURL = ?";
-
-      db.get(sql, [ req.params.urlId ], (err, row) => {
-        if (err) {
-          db.close();
-          return res.status(500).json({ error: "Database error" });
-        }
-        if (row) {
-          db.close();
-          console.log(row.origUrl);
-          return res.redirect(row.originalURL);
-        }
-        return;
-      });
-    });
+    const values = await searchShortenedURL(db, shortenedURL);
+    
+    console.log(values);
+    if (values.originalURL === "") {
+      return res.status(404).json({ message: "URL not found" });
+    } else {
+      res.redirect(values.originalURL);
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json("Server Error");
   }
 });
+
 
 module.exports = router;

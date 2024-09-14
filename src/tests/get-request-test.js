@@ -49,7 +49,7 @@ describe('GET /:urlID', () => {
 
   it("Should return a valid response for an existing URL ID", function (done) {
     chai.request("http://localhost:3000")
-      .get('/GhNPoG')
+      .get('_PLACEHOLDER_')
       .end(function (err, res) {
         expect(err).to.be.null;
         expect(res).to.have.status(200);

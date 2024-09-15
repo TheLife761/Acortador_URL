@@ -7,7 +7,7 @@ const {
   lookupShortenedUrl,
   getOriginalUrl,
   insertUrlRow
-} = require("../utils/db-queries.js");
+} = require("../db/db-queries.js");
 const idGenerator = require("../utils/id-generator.js");
 const shortenedWithDomain = require("../utils/shortened-with-domain.js");
 

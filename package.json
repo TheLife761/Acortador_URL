@@ -27,7 +27,7 @@
     "@babel/preset-env": "^7.25.4",
     "@types/cookie-parser": "^1.4.7",
     "chai": "<5.0.0",
-    "chai-http": "<5.0.0",
+    "chai-http": "^4.4.0",
     "cookie-parser": "^1.4.6",
     "morgan": "^1.10.0",
     "pug": "^3.0.3"

@@ -11,7 +11,7 @@ async function lookupShortenedUrl(db, originalURL) {
         resolve(row.shortenedURL);
       }
 
-      resolve();
+      resolve(null);
     });
   });
 }
@@ -29,7 +29,7 @@ async function getOriginalUrl(db, shortenedURL) {
         resolve(row.originalURL);
       }
 
-      resolve();
+      resolve(null);
     });
   });
 }
@@ -53,7 +53,7 @@ async function insertUrlRow(db, originalURL, shortenedURL) {
 }
 
 async function shortenedUrlExists(db, shortenedURL) {
-  const query = "SELECT shortenedURL FROM CHANGEME WHERE shortenedURL = ?";
+  const query = "SELECT shortenedURL FROM links WHERE shortenedURL = ?";
 
   return new Promise((resolve, reject) => {
     db.all(query, [shortenedURL], (err, rows) => {
@@ -65,7 +65,7 @@ async function shortenedUrlExists(db, shortenedURL) {
         resolve(rows.length > 0 ? shortenedURL : null);
       }
 
-      resolve();
+      resolve(null);
     });
   });
 }

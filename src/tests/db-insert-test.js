@@ -4,8 +4,8 @@ var chai = require('chai');
 
 const expect = chai.expect;
 
-const createDbConnection = require("../db/database");
-const { lookupShortenedUrl, getOriginalUrl, insertUrlRow } = require('../db/db-queries');
+const createDbConnection = require("../database/database");
+const { lookupShortenedUrl, getOriginalUrl, insertUrlRow } = require('../database/db-queries');
 
 const test = async () => {
     try {

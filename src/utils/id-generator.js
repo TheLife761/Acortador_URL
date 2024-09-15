@@ -1,7 +1,7 @@
 "use strict";
 
 var { nanoid } = require("nanoid");
-const { shortenedUrlExists } = require("../db/db-queries");
+const { shortenedUrlExists } = require("../database/db-queries");
 
 async function idGenerator(db) {
   let shortenedID = nanoid(8);

@@ -11,7 +11,7 @@ async function createTable(db) {
 
 async function createDBConnection() {
   return new Promise((resolve, reject) => {
-    const db = new sqlite3.Database("./src/db/links.db", async (err) => {
+    const db = new sqlite3.Database("./src/database/links.db", async (err) => {
       if (err) {
         reject(err);
       }

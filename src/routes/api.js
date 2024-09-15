@@ -1,15 +1,16 @@
 "use strict";
 
 const express = require("express");
-const createDbConnection = require("../db/database.js");
-const isValidUrl = require("../utils/url-validator.js");
+
+const createDbConnection = require("../database/database");
+const isValidUrl = require("../utils/url-validator");
+const idGenerator = require("../utils/id-generator");
+const shortenedWithDomain = require("../utils/shortened-with-domain");
 const {
   lookupShortenedUrl,
   getOriginalUrl,
   insertUrlRow
-} = require("../db/db-queries.js");
-const idGenerator = require("../utils/id-generator.js");
-const shortenedWithDomain = require("../utils/shortened-with-domain.js");
+} = require("../database/db-queries");
 
 const router = express.Router();
 

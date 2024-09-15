@@ -10,7 +10,8 @@ chai.use(chaiHttp);
 
 describe('GET /', () => {
   it("Should return a valid response when requesting index", function (done) {
-    chai.request(process.env.DOMAIN)
+    const server = process.env.HOST + ":" + process.env.PORT;
+    chai.request(server)
       .get('/')
       .end(function (err, res) {
         expect(err).to.be.null;

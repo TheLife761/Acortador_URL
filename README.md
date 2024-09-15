@@ -31,7 +31,7 @@ Instalar las dependencias necesarias
 Renombrar el archivo ".env.development" a ".env"
 
 ```bash
-mv .env.development .env
+  mv .env.development .env
 ```
 
 Por defecto, el proyecto se iniciará en el puerto 3000. Puede cambiar esto especificando el puerto deseado en el archivo .env

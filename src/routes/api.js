@@ -22,27 +22,20 @@ router.post("/shortener", async (req, res) => {
 
   try {
     const db = createDbConnection();
-    
-    searchOriginalURL(db, url, (err, queryData) => {
-      if(err) {
-        return res.status(500).json({err});
-      }
-      
-      if (queryData){
-        return res.json(shortenedWithDomain(queryData));
-      } else {
-        let shortenedID = idGenerator(db);
-        insertURL(db, url, shortenedID, (err) => {
-          if(err){
-            return res.status(500).json({err});
-          }
-        });
-        return res.json(shortenedWithDomain(shortenedID));
-      }
-    });
+
+    let shortenedId = await searchOriginalURL(db, url);
+
+    if (!shortenedId) {
+      shortenedId = await idGenerator(db);
+
+      await insertURL(db, url, shortenedId);
+    }
+
+    return res.status(200).json({ "Shortened": shortenedWithDomain(shortenedId) });
+
   } catch (e) {
-    console.log(e);
-    res.status(500).json("Server Error");
+    console.error(e);
+    res.status(500).json("Internal Server Error");
   }
 });
 
@@ -51,16 +44,17 @@ router.get("/:urlId", async (req, res) => {
 
   try {
     const db = createDbConnection();
-    const value = await searchShortenedURL(db, shortenedURL);
+    const originalURL = await searchShortenedURL(db, shortenedURL);
 
-    if (value === undefined) {
+    if (!originalURL) {
       return res.status(404).json({ message: "URL not found" });
-    } else {
-      res.redirect(value);
     }
+
+    return res.redirect(originalURL);
+
   } catch (e) {
     console.log(e);
-    res.status(500).json("Server Error");
+    res.status(500).json("Internal Server Error");
   }
 });
 

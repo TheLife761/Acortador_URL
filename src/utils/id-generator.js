@@ -1,17 +1,18 @@
 "use strict";
 
 var { nanoid } = require("nanoid");
-const {searchShortenedURL} = require("./db-queries");
+const { shortenedURLExists } = require("./db-queries");
 
-function idGenerator(db) {
-  const shortenedID = nanoid(8);
-  db.serialize(async () => {
-    let value = await searchShortenedURL(db, shortenedID);
-    while (value.shortenedURL === shortenedID) {
-      shortenedID = nanoid(8);
-      value = searchShortenedURL(db, shortenedID);
-    }
-  });
+async function idGenerator(db) {
+  let shortenedID = nanoid(8);
+  
+  let shortenedURL = await shortenedURLExists(db, shortenedID);
+
+  while (shortenedURL === shortenedID) {
+    shortenedID = nanoid(8);
+    shortenedURL = await shortenedURLExists(db, shortenedID);
+  }
+
   return shortenedID;
 }
 

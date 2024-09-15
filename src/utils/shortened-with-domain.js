@@ -3,9 +3,14 @@
 require('dotenv').config();
 
 const pageUrl = process.env.DOMAIN;
+const subdirectories = '/api/';
 
 function shortenedWithDomain(shortenedURL) {
-  return pageUrl + shortenedURL;
+  if (subdirectories) {
+    return pageUrl + subdirectories + shortenedURL;
+  }
+
+  return pageUrl + '/' + shortenedURL;
 }
 
 module.exports = shortenedWithDomain;

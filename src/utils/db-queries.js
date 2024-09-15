@@ -1,15 +1,22 @@
-function searchOriginalURL(db, originalURL, callback) {
-  const sql = "SELECT * FROM links WHERE originalURL = ? ";
+async function searchOriginalURL(db, originalURL) {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM links WHERE originalURL = ? ";
 
-  db.get(sql, [originalURL], (err, row) => {
-    if (err) {
-      return callback(Error(err), null);
-    }
-    return callback(null, row == undefined ? null : row.shortenedURL);
+    db.get(sql, [originalURL], (err, row) => {
+      if (err) {
+        reject(err);
+      }
+
+      if (row) {
+        resolve(row.shortenedURL);
+      }
+
+      resolve();
+    });
   });
 }
 
-function searchShortenedURL(db, shortenedURL) {
+async function searchShortenedURL(db, shortenedURL) {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM links WHERE shortenedURL = ?";
 
@@ -17,25 +24,49 @@ function searchShortenedURL(db, shortenedURL) {
       if (err) {
         reject(err);
       }
-      resolve(row.originalURL);
+
+      if (row) {
+        resolve(row.originalURL);
+      }
+
+      resolve();
     });
   });
 }
 
-function insertURL(db, originalURL, shortenedURL, callback) {
-  db.run(
-    "INSERT INTO links (originalURL, shortenedURL) VALUES (?, ?)",
-    [originalURL, shortenedURL],
-    function (err) {
-      if (err) {
-        return callback(err);
+async function insertURL(db, originalURL, shortenedURL) {
+  return new Promise((resolve, reject) => {
+    db.run(
+      "INSERT INTO links (originalURL, shortenedURL) VALUES (?, ?)",
+      [originalURL, shortenedURL],
+      function (err) {
+        if (err) {
+          reject(err);
+        }
+
+        resolve();
       }
-    }
-  );
+    );
+  });
+}
+
+async function shortenedURLExists(db, shortenedURL) {
+  const query = "SELECT shortenedURL FROM links WHERE shortenedURL = ?";
+
+  return new Promise((resolve, reject) => {
+    db.all(query, [shortenedURL], (err, rows) => {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(rows.length > 0 ? shortenedURL : null);
+    });
+  });
 }
 
 module.exports = {
   searchOriginalURL,
   searchShortenedURL,
-  insertURL
+  insertURL,
+  shortenedURLExists
 };

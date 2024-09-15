@@ -8,10 +8,12 @@ require('dotenv').config();
 const expect = chai.expect;
 chai.use(chaiHttp);
 
+const SERVER = process.env.HOST + ":" + process.env.PORT;
+
 describe('GET /', () => {
   it("Should return a valid response when requesting index", function (done) {
     const server = process.env.HOST + ":" + process.env.PORT;
-    chai.request(server)
+    chai.request(SERVER)
       .get('/')
       .end(function (err, res) {
         expect(err).to.be.null;
@@ -22,8 +24,9 @@ describe('GET /', () => {
 });
 
 describe('GET /:urlID', () => {
+  
   it("Should return a status code of 404 for a non-existent URL ID", function (done) {
-    chai.request("http://localhost:3000")
+    chai.request(SERVER)
       .get('/404')
       .end(function (err, res) {
         expect(err).to.be.null;

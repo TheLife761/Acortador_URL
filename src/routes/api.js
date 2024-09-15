@@ -9,7 +9,7 @@ const {
   insertURL
 } = require("../utils/db-queries.js");
 const idGenerator = require("../utils/id-generator.js");
-const shortenedWithDomain = require("../utils/shortened-with-domain.js")
+const shortenedWithDomain = require("../utils/shortened-with-domain.js");
 
 const router = express.Router();
 
@@ -17,7 +17,8 @@ router.post("/shortener", async (req, res) => {
   const { url } = req.body;
 
   if (!isValidUrl(url)) {
-    return res.status(400).json({ error: "Not valid url" });
+    // Should render index view with error
+    return res.status(400).json({ error: "Invalid url" });
   }
 
   try {
@@ -31,7 +32,7 @@ router.post("/shortener", async (req, res) => {
       await insertURL(db, url, shortenedId);
     }
 
-    return res.status(200).json({ "Shortened": shortenedWithDomain(shortenedId) });
+    res.render('index', { shortened: shortenedWithDomain(shortenedId) });
 
   } catch (e) {
     console.error(e);

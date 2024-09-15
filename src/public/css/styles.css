@@ -148,6 +148,10 @@ h6 {
   padding: 0 20px;
 }
 
+#invalid-url {
+  display: none;
+}
+
 .shortener-container {
   width: 100%;
   display: flex;

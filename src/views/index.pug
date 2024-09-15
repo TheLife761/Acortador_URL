@@ -7,16 +7,18 @@ block content
       .shortener-container
         .shortener-input-container
           label.top-shortener-label Peg&aacute; el enlace a acortar
-          form(action="/api/shortener", method="post") 
+          form(action="/api/shortener" method="post" id="form-shortener") 
             .shortener-input-wrap
-              input.shortener-input(type='text' placeholder='Enlace a acortar' id='url' name='url')
+              input.shortener-input(type='url' placeholder='Enlace a acortar' id='url' name='url' required)
               button.input-action-btn Acortar
-            label.danger-shortener-label Este enlace no es v&aacute;lido
-      .short
-        .shortener-input-wrap
-          input.shortener-input(type='text' value=``)
-          button.input-action-btn Copiar
-        label Es tu enlace acortado
+            if invalid_url
+              label.danger-shortener-label(id="invalid-url") Este enlace no es v&aacute;lido
+      if shortened
+        .short
+          .shortener-input-wrap
+            input.shortener-input(type='text' value=shortened)
+            button.input-action-btn Copiar
+          label Es tu enlace acortado
   .ad-banners-content
     div
       h2.customers-title Nuestros anunciantes
@@ -27,37 +29,37 @@ block content
       .ad-quote
         h3 &quot;Cortito y al pie es genial&quot;
         .ad-quote-author
-          img(src='assets/anunciante_1.jpg')
+          img(src='/assets/anunciante_1.jpg')
           p Michael Scott
       .ad-quote
         h3 &quot;Cortito y al pie es genial&quot;
         .ad-quote-author
-          img(src='assets/anunciante_1.jpg')
+          img(src='/assets/anunciante_1.jpg')
           p Michael Scott
       .ad-quote
         h3 &quot;Cortito y al pie es genial&quot;
         .ad-quote-author
-          img(src='assets/anunciante_1.jpg')
+          img(src='/assets/anunciante_1.jpg')
           p Michael Scott
       .ad-quote
         h3 &quot;Cortito y al pie es genial&quot;
         .ad-quote-author
-          img(src='assets/anunciante_1.jpg')
+          img(src='/assets/anunciante_1.jpg')
           p Michael Scott
       .ad-quote
         h3 &quot;Cortito y al pie es genial&quot;
         .ad-quote-author
-          img(src='assets/anunciante_1.jpg')
+          img(src='/assets/anunciante_1.jpg')
           p Michael Scott
       .ad-quote
         h3 &quot;Cortito y al pie es genial&quot;
         .ad-quote-author
-          img(src='assets/anunciante_1.jpg')
+          img(src='/assets/anunciante_1.jpg')
           p Michael Scott
   footer.footer-content
     .social-section
       a(href='#')
-        img.main-logo(src='assets/logo.png' alt='Logo de Cortito y al Pie')
+        img.main-logo(src='/assets/logo.png' alt='Logo de Cortito y al Pie')
       .socials-content
         a.social-icon(href='#')
           svg(height='100%' style='fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;' version='1.1' viewbox='0 0 512 512' width='100%' xml:space='preserve' xmlns='http://www.w3.org/2000/svg' xmlns:serif='http://www.serif.com/' xmlns:xlink='http://www.w3.org/1999/xlink')

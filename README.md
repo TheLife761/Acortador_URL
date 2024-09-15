@@ -13,25 +13,25 @@ Acortador de URLs simple implementado con Node.js, Express y Sqlite3. Hecho para
 Clonar el repositorio
 
 ```bash
-  git clone https://github.com/TheLife761/Acortador_URL.git
+git clone https://github.com/TheLife761/Acortador_URL.git
 ```
 
 Ir a la carpeta del repositorio clonado
 
 ```bash
-  cd Acortador_URL
+cd Acortador_URL
 ```
 
 Instalar las dependencias necesarias
 
 ```bash
-  npm install
+npm install
 ```
 
 Renombrar el archivo ".env.development" a ".env"
 
 ```bash
-  mv .env.development .env
+mv .env.development .env
 ```
 
 Por defecto, el proyecto se iniciará en el puerto 3000. Puede cambiar esto especificando el puerto deseado en el archivo .env
@@ -39,7 +39,7 @@ Por defecto, el proyecto se iniciará en el puerto 3000. Puede cambiar esto espe
 Iniciar el servidor
 
 ```bash
-  npm run start
+npm run start
 ```
 
 
@@ -48,7 +48,7 @@ Iniciar el servidor
 Para ejecutar tests, utilizar el siguiente comando
 
 ```bash
-  npm run test
+npm run test
 ```
 
 

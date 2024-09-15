@@ -1,4 +1,4 @@
-async function searchOriginalURL(db, originalURL) {
+async function lookupShortenedUrl(db, originalURL) {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM links WHERE originalURL = ? ";
 
@@ -16,7 +16,7 @@ async function searchOriginalURL(db, originalURL) {
   });
 }
 
-async function searchShortenedURL(db, shortenedURL) {
+async function getOriginalUrl(db, shortenedURL) {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM links WHERE shortenedURL = ?";
 
@@ -34,10 +34,12 @@ async function searchShortenedURL(db, shortenedURL) {
   });
 }
 
-async function insertURL(db, originalURL, shortenedURL) {
+async function insertUrlRow(db, originalURL, shortenedURL) {
+  const sql = "INSERT INTO links (originalURL, shortenedURL) VALUES (?, ?)";
+
   return new Promise((resolve, reject) => {
     db.run(
-      "INSERT INTO links (originalURL, shortenedURL) VALUES (?, ?)",
+      sql,
       [originalURL, shortenedURL],
       function (err) {
         if (err) {
@@ -50,8 +52,8 @@ async function insertURL(db, originalURL, shortenedURL) {
   });
 }
 
-async function shortenedURLExists(db, shortenedURL) {
-  const query = "SELECT shortenedURL FROM links WHERE shortenedURL = ?";
+async function shortenedUrlExists(db, shortenedURL) {
+  const query = "SELECT shortenedURL FROM CHANGEME WHERE shortenedURL = ?";
 
   return new Promise((resolve, reject) => {
     db.all(query, [shortenedURL], (err, rows) => {
@@ -59,14 +61,18 @@ async function shortenedURLExists(db, shortenedURL) {
         reject(err);
       }
 
-      resolve(rows.length > 0 ? shortenedURL : null);
+      if (rows) {
+        resolve(rows.length > 0 ? shortenedURL : null);
+      }
+
+      resolve();
     });
   });
 }
 
 module.exports = {
-  searchOriginalURL,
-  searchShortenedURL,
-  insertURL,
-  shortenedURLExists
+  lookupShortenedUrl,
+  getOriginalUrl,
+  insertUrlRow,
+  shortenedUrlExists
 };

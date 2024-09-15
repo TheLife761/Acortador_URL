@@ -4,9 +4,9 @@ const express = require("express");
 const createDbConnection = require("../db/database.js");
 const isValidUrl = require("../utils/url-validator.js");
 const {
-  searchOriginalURL,
-  searchShortenedURL,
-  insertURL
+  lookupShortenedUrl,
+  getOriginalUrl,
+  insertUrlRow
 } = require("../utils/db-queries.js");
 const idGenerator = require("../utils/id-generator.js");
 const shortenedWithDomain = require("../utils/shortened-with-domain.js");
@@ -17,22 +17,23 @@ router.post("/shortener", async (req, res) => {
   const { url } = req.body;
 
   if (!isValidUrl(url)) {
-    // Should render index view with error
-    return res.status(400).json({ error: "Invalid url" });
+    return res.status(400).render('index', { original: url, invalid_url: true });
   }
 
   try {
-    const db = createDbConnection();
+    const DB = await createDbConnection();
 
-    let shortenedId = await searchOriginalURL(db, url);
+    let shortenedId = await lookupShortenedUrl(DB, url);
 
     if (!shortenedId) {
-      shortenedId = await idGenerator(db);
+      shortenedId = await idGenerator(DB);
 
-      await insertURL(db, url, shortenedId);
+      await insertUrlRow(DB, url, shortenedId);
     }
 
-    res.render('index', { shortened: shortenedWithDomain(shortenedId) });
+    DB.close();
+
+    res.render('index', { original: url, shortened: shortenedWithDomain(shortenedId) });
 
   } catch (e) {
     console.error(e);
@@ -44,12 +45,14 @@ router.get("/:urlId", async (req, res) => {
   const shortenedURL = req.params.urlId;
 
   try {
-    const db = createDbConnection();
-    const originalURL = await searchShortenedURL(db, shortenedURL);
+    const DB = await createDbConnection();
+    const originalURL = await getOriginalUrl(DB, shortenedURL);
 
     if (!originalURL) {
       return res.status(404).json({ message: "URL not found" });
     }
+
+    DB.close();
 
     return res.redirect(originalURL);
 

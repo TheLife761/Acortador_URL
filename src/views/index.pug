@@ -9,16 +9,17 @@ block content
           label.top-shortener-label Peg&aacute; el enlace a acortar
           form(action="/api/shortener" method="post" id="form-shortener") 
             .shortener-input-wrap
-              input.shortener-input(type='url' placeholder='Enlace a acortar' id='url' name='url' required)
+              input.shortener-input(type='url' placeholder='Enlace a acortar' id='url' name='url' required value=original)
               button.input-action-btn Acortar
             if invalid_url
-              label.danger-shortener-label(id="invalid-url") Este enlace no es v&aacute;lido
+              label.danger-shortener-label(id="invalid-url") Este enlace no es v&aacute;lido. Aseg&uacute;rate de incluir https:// o http:// antes de tu enlace
       if shortened
         .short
           .shortener-input-wrap
-            input.shortener-input(type='text' value=shortened)
-            button.input-action-btn Copiar
+            input.shortener-input(type='text' id="shortened-url" value=shortened)
+            button.input-action-btn(id="copy-shortened-url") Copiar
           label Es tu enlace acortado
+  script(src="/scripts/shortener.js") 
   .ad-banners-content
     div
       h2.customers-title Nuestros anunciantes

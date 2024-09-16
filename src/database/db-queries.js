@@ -46,7 +46,7 @@ async function insertUrlRow(db, originalURL, shortenedURL) {
           reject(err);
         }
 
-        resolve();
+        resolve(null);
       }
     );
   });
